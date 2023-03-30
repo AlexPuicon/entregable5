@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { UserContext } from '../contexts/UserContext';
 
 const Home = () => {
   const [nameValue, setNameValue] = useState('');
   const [nameError, setnameError] = useState(null);
+  const { setUser } = useContext(UserContext);
+
   const handleChange = (e) => {
     const newNameValue = e.target.value;
     setNameValue(newNameValue);
     if (newNameValue === '') setnameError('Name is required');
-    else if (/^[a-zA-Z ]{5,}$/i.test(newNameValue))
-      setnameError('Only letters and blanks are allowed and should be 5 length');
+    else if (/^[A-Z][a-z ]{8,}$/i.test(newNameValue))
+      setnameError('Only letters and blanks are allowed and should be 8 length');
     else setnameError(null);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!nameError) console.log('Save user name');
+    if (!nameError) setUser(nameValue);
   };
+
   return (
     <div className="text-center">
       <div>
@@ -25,7 +29,10 @@ const Home = () => {
         <h1 className="text-red-500 text-center text-4xl font-bold">!Hello Trainer</h1>
         <p>Type your name to start</p>
       </div>
-      <form className="flex flex-row justify-center items-center mt-8">
+      <form
+        className="flex flex-row justify-center items-center mt-8"
+        onSubmit={handleSubmit}
+      >
         <input
           type="text"
           className="shadow-md border-black p-2"
