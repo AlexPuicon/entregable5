@@ -3,6 +3,7 @@ import Home from './views/Home';
 import Pokedex from './views/Pokedex';
 import PokedexLayout from './components/PokedexLayout';
 import PokemonDetail from './views/PokemonDetail';
+import ProtectedRoute from './components/ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
@@ -11,7 +12,11 @@ export const router = createBrowserRouter([
   },
   {
     path: '/pokedex',
-    element: <PokedexLayout />,
+    element: (
+      <ProtectedRoute>
+        <PokedexLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: ':id',
