@@ -1,31 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
-import axios from 'axios';
 import PokemonCard from '../components/PokemonCard';
 import { usePagination } from '../hooks/usePagination';
-
-const getAllPokemon = async () => {
-  try {
-    const res = await axios.get('https://pokeapi.co/api/v2/pokemon/?limit=1300');
-    return res.data.results;
-  } catch (error) {
-    console.error(error);
-  }
-};
+import { Form, useLoaderData } from 'react-router-dom';
 
 const Pokedex = () => {
   const { user } = useContext(UserContext);
-  const [pokemons, setPokemons] = useState([]);
+  const [pokemonName, setPokemonName] = useState('');
+  const [pokemonType, setPokemonType] = useState('');
+  const { pokemons, types } = useLoaderData();
   const pokemonPagination = usePagination(pokemons, 55);
 
-  const loadAllPokemons = async () => {
-    const allPokemons = await getAllPokemon();
-    setPokemons(allPokemons);
+  const handleNameChange = (e) => {
+    setPokemonName(e.target.value);
+    setPokemonType('');
   };
 
-  useEffect(() => {
-    loadAllPokemons();
-  }, []);
+  const handleTypeChange = (e) => {
+    setPokemonType(e.target.value);
+    setPokemonName('');
+  };
 
   return (
     <div className="w-full p-5">
@@ -46,6 +40,36 @@ const Pokedex = () => {
             {page}
           </button>
         ))}
+      </div>
+
+      <div>
+        <Form>
+          <h3 className="text-red-500">Filter for search</h3>
+          <div className="flex flex-row justify-between">
+            <div className="flex flex-row gap-3">
+              <input
+                type="text"
+                name="pokemon_name"
+                className="shadow-md border-black"
+                value={pokemonName}
+                onChange={handleNameChange}
+              />
+              <select name="pokemon_type" value={pokemonType} onChange={handleTypeChange}>
+                <option value="" disabled>
+                  --Chose a typ--
+                </option>
+                {types.map((type) => (
+                  <option key={type.url} value={type.name}>
+                    {type.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button className="bg-red-500 text-white p-2 hover:bg-red-400" type="submit">
+              Search
+            </button>
+          </div>
+        </Form>
       </div>
 
       <section>

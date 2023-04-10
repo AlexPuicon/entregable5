@@ -14,16 +14,15 @@ const PokemonCard = ({ pokemonData }) => {
   const [pokemon, setPokemon] = useState(null);
   const navigate = useNavigate();
 
-  const loadPokemon = async () => {
-    const pokemonInfo = await getPkemonById(pokemonData.url);
-    setPokemon(pokemonInfo);
-  };
-
   const handleClickNavigate = () => {
     navigate(`/pokedex/${pokemon.id}`);
   };
 
   useEffect(() => {
+    const loadPokemon = async () => {
+      const pokemonInfo = await getPkemonById(pokemonData.url);
+      setPokemon(pokemonInfo);
+    };
     loadPokemon();
   }, []);
 
