@@ -5,7 +5,7 @@ import { UserContext } from '../contexts/UserContext';
 const Home = () => {
   const [nameValue, setNameValue] = useState('');
   const [nameError, setnameError] = useState(null);
-  const { user, setUser } = useContext(UserContext);
+  const { user, saveUser } = useContext(UserContext);
 
   const handleChange = (e) => {
     const newNameValue = e.target.value;
@@ -19,7 +19,7 @@ const Home = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!nameError) {
-      setUser(nameValue);
+      saveUser(nameValue);
     }
   };
 

@@ -15,7 +15,8 @@ const PokemonCard = ({ pokemonData }) => {
   const navigate = useNavigate();
 
   const handleClickNavigate = () => {
-    navigate(`/pokedex/${pokemon.id}`);
+    //se agregó { state: { pokemon } }
+    navigate(`/pokedex/${pokemon.id}`, { state: { pokemon } });
   };
 
   useEffect(() => {

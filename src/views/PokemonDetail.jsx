@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const getPkemonById = async (id) => {
   try {
@@ -13,6 +13,8 @@ const getPkemonById = async (id) => {
 
 const PokemonDetail = () => {
   const { id } = useParams();
+  const { pokemon } = useLocation();
+  console.log({ pokemon });
   return (
     <div>
       <h1>Pokemon Detail</h1>

@@ -6,19 +6,19 @@ import { Form, useLoaderData } from 'react-router-dom';
 
 const Pokedex = () => {
   const { user } = useContext(UserContext);
-  const [pokemonName, setPokemonName] = useState('');
-  const [pokemonType, setPokemonType] = useState('');
-  const { pokemons, types } = useLoaderData();
+  const { pokemons, types, name, type } = useLoaderData();
+  const [pokemonName, setPokemonName] = useState(name ?? '');
+  const [pokemonType, setPokemonType] = useState(type ?? '');
   const pokemonPagination = usePagination(pokemons, 55);
 
   const handleNameChange = (e) => {
     setPokemonName(e.target.value);
-    setPokemonType('');
+    // setPokemonType('');
   };
 
   const handleTypeChange = (e) => {
     setPokemonType(e.target.value);
-    setPokemonName('');
+    // setPokemonName('');
   };
 
   return (
@@ -56,7 +56,7 @@ const Pokedex = () => {
               />
               <select name="pokemon_type" value={pokemonType} onChange={handleTypeChange}>
                 <option value="" disabled>
-                  --Chose a typ--
+                  --Chose a type--
                 </option>
                 {types.map((type) => (
                   <option key={type.url} value={type.name}>
