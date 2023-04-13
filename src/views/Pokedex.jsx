@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import PokemonCard from '../components/PokemonCard';
 import { usePagination } from '../hooks/usePagination';
@@ -20,6 +20,14 @@ const Pokedex = () => {
     setPokemonType(e.target.value);
     // setPokemonName('');
   };
+
+  useEffect(() => {
+    setPokemonName(name ?? '');
+  }, [name]);
+
+  useEffect(() => {
+    setPokemonType(type ?? '');
+  }, [type]);
 
   return (
     <div className="w-full p-5">
@@ -55,9 +63,7 @@ const Pokedex = () => {
                 onChange={handleNameChange}
               />
               <select name="pokemon_type" value={pokemonType} onChange={handleTypeChange}>
-                <option value="" disabled>
-                  --Chose a type--
-                </option>
+                <option value="">All</option>
                 {types.map((type) => (
                   <option key={type.url} value={type.name}>
                     {type.name}
